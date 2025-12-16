@@ -1,0 +1,82 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cargo-build-debug",
+            "type": "cargo",
+            "command": "build",
+            "args": [
+                "--bin=keymui",
+                "--package=keymui"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "cargo-build-release",
+            "type": "cargo",
+            "command": "build",
+            "args": [
+                "--release",
+                "--bin=keymui",
+                "--package=keymui"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ]
+        },
+        {
+            "label": "cargo-run",
+            "type": "cargo",
+            "command": "run",
+            "args": [
+                "--bin=keymui",
+                "--package=keymui"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ]
+        },
+        {
+            "label": "cargo-run-release",
+            "type": "cargo",
+            "command": "run",
+            "args": [
+                "--release",
+                "--bin=keymui",
+                "--package=keymui"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ]
+        },
+        {
+            "label": "cargo-test",
+            "type": "cargo",
+            "command": "test",
+            "args": [],
+            "problemMatcher": [
+                "$rustc"
+            ]
+        },
+        {
+            "label": "cargo-clippy",
+            "type": "cargo",
+            "command": "clippy",
+            "args": [
+                "--",
+                "-D",
+                "warnings"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ]
+        }
+    ]
+}
+

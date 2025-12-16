@@ -5,6 +5,7 @@ use color_eyre::eyre::{anyhow, Context, ContextCompat, Result};
 use directories::BaseDirs;
 use kc::Corpus;
 use km::{self, MetricContext};
+use std::env;
 use std::ffi::OsStr;
 use std::fs;
 use std::path::PathBuf;
@@ -12,6 +13,12 @@ use std::path::PathBuf;
 pub fn initial_setup() {
     let base_dirs = BaseDirs::new().unwrap();
     let data_dir = base_dirs.data_dir().join("keymeow");
+    
+    // Create project-local layouts directory
+    let project_root = env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+    let local_layouts = project_root.join("layouts");
+    fs::create_dir_all(&local_layouts).unwrap();
+    
     if data_dir.exists() {
         return;
     }
@@ -28,6 +35,29 @@ impl Keymui {
 
     pub fn data_dir(&self) -> PathBuf {
         self.base_dirs.data_dir().join("keymeow")
+    }
+
+    pub fn project_root(&self) -> PathBuf {
+        // Try to find project root by looking for Cargo.toml
+        let mut current = env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+        
+        loop {
+            let cargo_toml = current.join("Cargo.toml");
+            if cargo_toml.exists() {
+                return current;
+            }
+            
+            if let Some(parent) = current.parent() {
+                current = parent.to_path_buf();
+            } else {
+                // Fallback: use current directory if we can't find project root
+                return env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+            }
+        }
+    }
+
+    pub fn layouts_dir(&self) -> PathBuf {
+        self.project_root().join("layouts")
     }
 
     pub fn load_config(&mut self) -> Result<()> {
@@ -52,7 +82,7 @@ impl Keymui {
     }
 
     pub fn load_layouts(&mut self) -> Result<()> {
-        let ldir = self.data_dir().join("layouts");
+        let ldir = self.layouts_dir();
         fs::create_dir_all(&ldir)?;
         for entry in fs::read_dir(ldir).context("couldn't read layouts directory")? {
             let path = entry?.path();

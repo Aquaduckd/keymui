@@ -189,13 +189,12 @@ impl Keymui {
                     }
                     let name = args[0].to_owned();
                     let data = ctx
-                        .layout_data()
+                        .fixed_layout_data()
                         .name(name.clone())
                         .authors(vec!["User".to_string()]);
                     let s = serde_json::to_string_pretty(&data)?;
                     let path = self
-                        .data_dir()
-                        .join("layouts/")
+                        .layouts_dir()
                         .join(format!("{}.json", name.to_lowercase()));
                     let mut file = File::create(&path)?;
                     write!(file, "{}", &s)?;

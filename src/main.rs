@@ -262,7 +262,7 @@ impl Application for Keymui {
         String::from("Keymui")
     }
 
-    fn view(&self) -> Element<Message> {
+    fn view(&self) -> Element<'_, Message> {
         let pane_grid = PaneGrid::new(&self.panes, |_, pane, _| {
             pane_grid::Content::new(responsive(|_| {
                 match pane.kind {
