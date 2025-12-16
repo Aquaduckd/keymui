@@ -1,5 +1,4 @@
-use crate::{Corpus, CorpusChar, NgramType};
-#[cfg(feature = "serde")]
+use crate::keycat::{Corpus, CorpusChar, NgramType};
 use serde::{Deserialize, Serialize};
 
 pub type Pos = usize;
@@ -77,7 +76,8 @@ impl Layout {
     }
 }
 
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize), serde(untagged))]
+#[derive(Serialize, Deserialize)]
+#[serde(untagged)]
 #[derive(Debug)]
 pub enum Nstroke {
     Monostroke(usize),

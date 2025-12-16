@@ -1,4 +1,4 @@
-use kc::{
+use crate::keycat::{
     self,
     analysis::{Analyzer, MetricData as KcMetricData, NstrokeData},
     Corpus, CorpusChar, Layout, NgramType,
@@ -253,12 +253,12 @@ pub struct MetricContext {
 }
 
 impl MetricContext {
-    pub fn layout_matrix(l: &LayoutData, kb: &Keyboard, corpus: &Corpus) -> Option<kc::Layout> {
+    pub fn layout_matrix(l: &LayoutData, kb: &Keyboard, corpus: &Corpus) -> Option<Layout> {
         let kb_size = kb.keys.map.iter().flatten().count() + kb.combos.len();
         match &l.format {
             LayoutFormat::Fixed(layout) => {
                 if layout.len() <= kb_size {
-                    Some(kc::Layout(
+                    Some(Layout(
                         layout
                             .iter()
                             .map(|c| match c {
@@ -329,7 +329,7 @@ impl MetricContext {
                     .collect();
 
                 if matrix.len() == kb_size + kb.combos.len() {
-                    Some(kc::Layout(matrix))
+                    Some(Layout(matrix))
                 } else {
                     None
                 }
@@ -511,3 +511,4 @@ mod tests {
         }
     }
 }
+

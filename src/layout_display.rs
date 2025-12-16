@@ -4,7 +4,7 @@ use iced::alignment::{Horizontal, Vertical};
 use iced::widget::canvas::{self, Text};
 use iced::widget::canvas::{Cache, Geometry};
 use iced::{mouse, Color, Point, Rectangle, Renderer, Size, Theme};
-use km::{self, KeyCoord, MetricContext};
+use crate::keymeow::{self, Finger, FingerKind, Hand, KeyCoord, MetricContext};
 
 #[derive(Debug, Clone)]
 pub struct KeyData {
@@ -51,18 +51,18 @@ pub struct LayoutDisplay {
     cache: Cache,
 }
 
-fn color_from_finger(finger: km::Finger) -> Color {
+fn color_from_finger(finger: Finger) -> Color {
     let kind = match finger.kind() {
-        km::FingerKind::Pinky => 0.4,
-        km::FingerKind::Ring => 0.3,
-        km::FingerKind::Middle => 0.2,
-        km::FingerKind::Index => 0.1,
-        km::FingerKind::Thumb => 0.0,
+        FingerKind::Pinky => 0.4,
+        FingerKind::Ring => 0.3,
+        FingerKind::Middle => 0.2,
+        FingerKind::Index => 0.1,
+        FingerKind::Thumb => 0.0,
     };
 
     let (r, b) = match finger.hand() {
-        km::Hand::Left => (0.5 + kind, 0.1 + kind),
-        km::Hand::Right => (0.1 + kind, 0.5 + kind),
+        Hand::Left => (0.5 + kind, 0.1 + kind),
+        Hand::Right => (0.1 + kind, 0.5 + kind),
     };
 
     Color::from_rgb(r, 0.1 + kind, b)

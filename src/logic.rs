@@ -3,8 +3,8 @@ use crate::Keymui;
 use crate::{download, NstrokeSortMethod};
 use color_eyre::eyre::{anyhow, Context, ContextCompat, Result};
 use directories::BaseDirs;
-use kc::Corpus;
-use km::{self, MetricContext};
+use crate::keycat::Corpus;
+use crate::keymeow::{self, MetricContext};
 use std::env;
 use std::ffi::OsStr;
 use std::fs;
@@ -88,7 +88,7 @@ impl Keymui {
             let path = entry?.path();
             let s = fs::read_to_string(&path)
                 .with_context(|| format!("couldn't read file {}", &path.display()))?;
-            let layout: km::LayoutData = serde_json::from_str(&s)
+            let layout: crate::keymeow::LayoutData = serde_json::from_str(&s)
                 .with_context(|| format!("couldn't parse layout file {}", &path.display()))?;
             self.layouts
                 .insert(layout.name.clone().to_lowercase().replace(' ', "-"), layout);
@@ -212,7 +212,7 @@ impl Keymui {
             )
             .context("metric data doesn't exist")?;
         let b = fs::read(path).context("couldn't read metrics file")?;
-        let metrics: km::MetricData =
+        let metrics: crate::keymeow::MetricData =
             rmp_serde::from_slice(&b).context("couldn't deserialize metrics")?;
 
         let corpus = self.current_corpus.clone().context("no corpus selected")?;

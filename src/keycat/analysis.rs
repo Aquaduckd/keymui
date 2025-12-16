@@ -1,18 +1,17 @@
-use crate::{Corpus, Layout, NgramType, Nstroke, Swap};
+use crate::keycat::{Corpus, Layout, NgramType, Nstroke, Swap};
 use std::cmp::Ordering;
 
-#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
 pub type MetricIndex = usize;
 pub type NstrokeIndex = usize;
 
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Serialize, Deserialize)]
 #[derive(Debug)]
 pub struct MetricAmount {
-    #[cfg_attr(feature = "serde", serde(rename = "met"))]
+    #[serde(rename = "met")]
     pub metric: MetricIndex,
-    #[cfg_attr(feature = "serde", serde(rename = "amt"))]
+    #[serde(rename = "amt")]
     pub amount: f32,
 }
 
@@ -23,12 +22,12 @@ impl MetricAmount {
     }
 }
 
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Serialize, Deserialize)]
 #[derive(Debug)]
 pub struct NstrokeData {
-    #[cfg_attr(feature = "serde", serde(rename = "ns"))]
+    #[serde(rename = "ns")]
     pub nstroke: Nstroke,
-    #[cfg_attr(feature = "serde", serde(rename = "ams"))]
+    #[serde(rename = "ams")]
     pub amounts: Vec<MetricAmount>,
 }
 
@@ -39,7 +38,7 @@ impl NstrokeData {
     }
 }
 
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Serialize, Deserialize)]
 #[derive(Debug)]
 /// Structure for storing metric data and performing analysis on layouts.
 pub struct MetricData {

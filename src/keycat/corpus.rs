@@ -1,10 +1,9 @@
-use crate::Layout;
+use crate::keycat::Layout;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{self, BufRead, BufReader};
 use std::path::Path;
 
-#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
 /// Represents an index in a `Corpus` for bigrams, skipgrams, and
@@ -13,7 +12,7 @@ pub type CorpusIndex = usize;
 /// Represents a character in the `Corpus`.
 pub type CorpusChar = CorpusIndex;
 
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Serialize, Deserialize)]
 #[derive(Copy, Clone, Debug)]
 pub enum NgramType {
     Monogram,
@@ -23,7 +22,7 @@ pub enum NgramType {
 }
 
 /// Structure for storing text ngram frequencies.
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Serialize, Deserialize)]
 pub struct Corpus {
     char_map: HashMap<char, CorpusChar>,
     pub char_list: Vec<Vec<char>>,

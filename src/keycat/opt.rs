@@ -1,4 +1,4 @@
-use crate::{analysis::Analyzer, Layout, Swap};
+use crate::keycat::{analysis::Analyzer, Layout, Swap};
 use rand::prelude::*;
 use rayon::prelude::*;
 
@@ -140,7 +140,7 @@ impl Optimizer for AnnealingOptimizer {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{
+    use crate::keycat::{
         analysis::{Analyzer, MetricAmount, MetricData, NstrokeData},
         Corpus, NgramType, Nstroke,
     };

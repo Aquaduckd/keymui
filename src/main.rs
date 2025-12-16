@@ -1,3 +1,5 @@
+mod keycat;
+mod keymeow;
 mod commands;
 mod download;
 mod layout_display;
@@ -16,8 +18,8 @@ use iced::{
     alignment, executor, Application, Command, Element, Font, Length, Settings, Subscription, Theme,
 };
 use iced_aw::{modal, Card};
-use kc::Swap;
-use km::{LayoutData, MetricContext};
+use crate::keycat::Swap;
+use crate::keymeow::{LayoutData, MetricContext};
 use layout_display::{ColorStyle, LayoutDisplay};
 use rfd::FileDialog;
 use serde::{Deserialize, Serialize};
